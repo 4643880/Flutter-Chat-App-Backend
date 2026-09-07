@@ -7,6 +7,6 @@ export const MAX_RETRIES = 5;
 export const RETRY_DELAY = 3000; // 3 seconds
 
 export const allowedOrigins = [
-  "http://localhost:5173",
+  "http://localhost:8000",
   // 'https://your-production-site.com'
 ];
