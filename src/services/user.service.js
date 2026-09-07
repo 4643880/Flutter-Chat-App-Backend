@@ -3,13 +3,12 @@ import userRepository from "../repositories/user.repository.js";
 import ApiError from "../utils/api_error_handler.js";
 
 const register = async (username, password, lastSeen) => {
-  console.log("asad");
   const existingUser = await userRepository.findByUserName(username);
 
   if (existingUser) {
     throw new ApiError(
       StatusCodes.CONFLICT,
-      "User already exists with given email.",
+      "User already exists with given username.",
     );
   }
 
@@ -23,8 +22,8 @@ const register = async (username, password, lastSeen) => {
     myUser._id,
   );
 
-  // Remove Password
-  const createdUser = await userRepository.findUserById(myUser._id);
+  // Return user without sensitive fields
+  const createdUser = await userRepository.findExistingUserById(myUser._id);
 
   if (!createdUser) {
     throw new ApiError(
