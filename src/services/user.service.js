@@ -3,34 +3,28 @@ import userRepository from "../repositories/user.repository.js";
 import ApiError from "../utils/api_error_handler.js";
 
 const register = async (username, password, lastSeen) => {
-
   const existingUser = await userRepository.findByUserName(username);
 
   if (existingUser) {
     throw new ApiError(
       StatusCodes.CONFLICT,
-      "User already exists with given email.",
+      "User already exists with given username.",
     );
   }
 
-  console.log('11');
   const myUser = await userRepository.createUser({
     username,
     password,
     lastSeen,
   });
 
-  console.log('22')
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     myUser._id,
   );
 
-  console.log('33')
-
   // Remove Password
   const createdUser = await userRepository.findUserById(myUser._id);
 
-  console.log('44')
   if (!createdUser) {
     throw new ApiError(
       StatusCodes.INTERNAL_SERVER_ERROR,
@@ -64,20 +58,17 @@ const login = async (username, password) => {
 
 const generateAccessAndRefreshTokens = async (getUserId) => {
   try {
-    console.log('1');
     const user = await userRepository.findUserById(getUserId);
-    console.log('2');
+
     // @ts-ignore
     const accessToken = user.generateAccessToken();
-    console.log('3');
+
     // @ts-ignore
     const refreshToken = user.generateRefreshToken();
-    console.log('4');
 
     user.refreshToken = refreshToken;
-    console.log('5')
+
     await user.save({ validateBeforeSave: false });
-    console.log('6')
 
     return { accessToken, refreshToken };
   } catch (err) {

@@ -11,7 +11,7 @@ const findByUserName = async (getUsername) => {
 };
 
 const findUserById = async (id) => {
-  return await User.findById(id).select("-password -__v -refreshToken");
+  return await User.findById(id);
 };
 
 const findExistingUserById = async (id) => {

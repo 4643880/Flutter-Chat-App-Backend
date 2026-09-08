@@ -56,24 +56,22 @@ userSchema.methods.generateAccessToken = function () {
     username: this.username,
   };
 
-  // @ts-ignore
-  const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-    expiresIn: ACCESS_TOKEN_EXPIRY,
+  const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
   });
 
   return accessToken;
 };
 
-// Implementing Custom Method to generate Access Token
+// Implementing Custom Method to generate Refresh Token
 userSchema.methods.generateRefreshToken = function () {
   const payload = {
     _id: this._id,
     username: this.username,
   };
 
-  // @ts-ignore
-  const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, {
-    expiresIn: REFRESH_TOKEN_EXPIRY,
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
   });
 
   return refreshToken;
