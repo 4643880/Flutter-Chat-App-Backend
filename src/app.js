@@ -10,19 +10,16 @@ import chatRoutes from "./routes/chat.routes.js";
 import errorHandler from "./middlewares/error_handler.middleware.js";
 import methodNotAllowed from "./middlewares/method_not_allowed.middleware.js";
 
+import socketHandler from "./sockets/socket.handler.js";
+
 const app = express();
 
+// HTTP middleware
 app.use(express.json({ limit: "16kb" }));
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed for this origin"));
-      }
-    },
+    origin: "*",
     credentials: true,
   }),
 );
@@ -51,6 +48,9 @@ const io = new Server(httpServer, {
     origin: "*",
   },
 });
+
+// Socket handlers
+socketHandler(io);
 
 app.get("/", (req, res) => {
   res.status(200).json({
