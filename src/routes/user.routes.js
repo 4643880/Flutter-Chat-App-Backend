@@ -22,4 +22,7 @@ router.route("/register").post(validate(registerSchema), register);
  */
 router.route("/login").post(validate(loginSchema), login);
 
+
+
+
 export default router;

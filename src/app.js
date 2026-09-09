@@ -1,7 +1,12 @@
 import express from "express";
 import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 import userRoutes from "./routes/user.routes.js";
+import chatRoomRoutes from "./routes/chat_room.routes.js";
+import chatRoutes from "./routes/chat.routes.js";
+
 import errorHandler from "./middlewares/error_handler.middleware.js";
 import methodNotAllowed from "./middlewares/method_not_allowed.middleware.js";
 
@@ -28,13 +33,29 @@ app.use(express.static("public"));
 
 // Routes
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/chat-room", chatRoomRoutes);
+app.use("/api/v1/chat", chatRoutes);
 
-app.use(errorHandler); // Global error handler must be after the routes
-// Add at the end of all routes to catch-all  unsupported routes or methods e.g user hit post method but api expects put method
+// Unsupported routes/methods
 app.use(methodNotAllowed);
 
-app.get("/", (req, res) => {
-  res.status(StatusCodes.OK).json({ welcomeMessage: "Welcome to Rabbit API." });
+// Global error handler
+app.use(errorHandler);
+
+// HTTP Server
+const httpServer = createServer(app);
+
+// Socket.IO
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+  },
 });
 
-export { app };
+app.get("/", (req, res) => {
+  res.status(200).json({
+    welcomeMessage: "Welcome to Chat App API.",
+  });
+});
+
+export { app, httpServer, io };

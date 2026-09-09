@@ -79,7 +79,53 @@ const generateAccessAndRefreshTokens = async (getUserId) => {
   }
 };
 
+export const getUserLastSeen = async (userId) => {
+  // User ki lastSeen repository ke through fetch karenge
+  const user = await userRepository.getUserOnlineStatus(userId);
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User does not exist!");
+  }
+
+  return user.lastSeen;
+};
+
+export const updateUserLastSeen = async (userId) => {
+  // User ko offline mark karke lastSeen update karenge
+  const user = await userRepository.updateUserLastSeen(userId);
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User does not exist!");
+  }
+
+  return user;
+};
+
+export const updateUserOnlineStatus = async (userId, isOnline) => {
+  // User ka online/offline status update karenge
+  const user = await userRepository.updateUserOnlineStatus(userId, isOnline);
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User does not exist!");
+  }
+
+  return user;
+};
+
+export const getUserOnlineStatus = async (userId) => {
+  // User ka online status aur lastSeen fetch karenge
+  const user = await userRepository.getUserOnlineStatus(userId);
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User does not exist!");
+  }
+
+  return user;
+};
+
 export default {
   register,
   login,
+  getUserLastSeen,
+  updateUserLastSeen,
 };
