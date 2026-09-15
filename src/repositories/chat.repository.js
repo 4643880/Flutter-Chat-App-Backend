@@ -30,7 +30,6 @@ const getUnDeliveredMessages = async (queryObj) => {
   return await Message.find(queryObj);
 };
 
-
 const markMessagesAsDelivered = async (chatRoomId, receiverId, senderId) => {
   // Sirf current chat room ke messages ko delivered karenge
   return await Message.updateMany(
@@ -65,9 +64,8 @@ const markMessagesAsRead = async (chatRoomId, receiverId, senderId) => {
   );
 };
 
-export const chatRoom = () => {
 
-}
+
 
 export default {
   createMessage,

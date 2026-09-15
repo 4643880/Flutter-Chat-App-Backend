@@ -10,10 +10,12 @@ import {
   getUnDeliveredMessages,
   markMessagesAsDelivered,
   markMessagesAsRead,
-} from "../controllers/message.controller.js";
+} from "../controllers/chat.controller.js";
 
-import { createMessageSchema } from "../validators/message.schema.js";
-import { updateMessageStatusSchema } from "../validators/message_status.schema.js";
+import {
+  createMessageSchema,
+  updateMessageStatusSchema,
+} from "../validators/message.schema.js";
 
 const router = express.Router();
 

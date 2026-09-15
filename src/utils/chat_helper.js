@@ -1,5 +1,5 @@
 export const getRoomId = (user1, user2) => {
-  return [user1, user2].sort().join("_");
+  return [String(user1), String(user2)].sort().join("_");
 };
 
 getRoomId("userA", "userB"); // This will return userA_userB

@@ -38,6 +38,7 @@ const updateUserLastSeen = async (userId) => {
   );
 };
 
+
 const updateUserOnlineStatus = async (userId, isOnline) => {
   // User ka online/offline status update karenge
   return await User.findByIdAndUpdate(

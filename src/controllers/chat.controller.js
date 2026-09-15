@@ -1,7 +1,5 @@
 import StatusCodes from "../constants/status_codes.js";
-import * as messageService from "../services/message.service.js";
 import asyncHandler from "../utils/async_handler.js";
-import ApiResponse from "../utils/api_response.js";
 
 /**
  * @desc    Create a new message
