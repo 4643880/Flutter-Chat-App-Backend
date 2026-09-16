@@ -38,18 +38,17 @@ const updateUserLastSeen = async (userId) => {
   );
 };
 
-
 const updateUserOnlineStatus = async (userId, isOnline) => {
   // User ka online/offline status update karenge
   return await User.findByIdAndUpdate(
     userId,
     {
       $set: {
-        isOnline,
+        isOnline: true,
       },
     },
     {
-      new: true,
+      returnDocument: true,
     },
   ).select("-password -__v -refreshToken");
 };

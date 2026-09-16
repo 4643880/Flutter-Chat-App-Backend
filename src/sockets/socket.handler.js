@@ -14,6 +14,7 @@ import crypto from "crypto";
 import socketAuthMiddleware from "../middlewares/socket_auth.middleware.js";
 
 import userRepository from "../repositories/user.repository.js";
+import chatRepository from "../repositories/chat.repository.js";
 
 const socketHandler = (io) => {
   // ==========================================
@@ -109,7 +110,7 @@ const socketHandler = (io) => {
       // 6. Handle pending messages
       // ==========================================
 
-      const pendingMessages = await messageRepository.getUnDeliveredMessages({
+      const pendingMessages = await chatRepository.getUnDeliveredMessages({
         receiver: userId,
         status: "sent",
       });

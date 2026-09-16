@@ -65,14 +65,11 @@ const markMessagesAsRead = async (chatRoomId, receiverId, senderId) => {
 };
 
 
-
-
 export default {
   createMessage,
   fetchMessages,
   updateMessageStatus,
   getUnDeliveredMessages,
-  updateUserLastSeen,
   markMessagesAsDelivered,
   markMessagesAsRead,
 };
