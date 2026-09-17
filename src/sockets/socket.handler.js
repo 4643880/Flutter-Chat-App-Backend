@@ -12,6 +12,7 @@
 import crypto from "crypto";
 
 import socketAuthMiddleware from "../middlewares/socket_auth.middleware.js";
+import { getRoomId } from "../utils/chat_helper.js";
 
 import userRepository from "../repositories/user.repository.js";
 import chatRepository from "../repositories/chat.repository.js";
@@ -82,7 +83,7 @@ const socketHandler = (io) => {
 
           const messageId = crypto.randomUUID();
 
-          const newMessage = await messageRepository.createMessage({
+          const newMessage = await chatRepository.createMessage({
             chatRoomId,
             messageId,
             sender,
@@ -125,7 +126,7 @@ const socketHandler = (io) => {
         // ==========================================
 
         for (const pendingMessage of pendingMessages) {
-          await messageRepository.updateMessageStatus(
+          await chatRepository.updateMessageStatus(
             {
               _id: pendingMessage._id,
               status: "sent",
@@ -152,7 +153,7 @@ const socketHandler = (io) => {
 
           const receiverId = userId;
 
-          await messageRepository.markMessagesAsRead(
+          await chatRepository.markMessagesAsRead(
             chatRoomId,
             receiverId,
             senderId,

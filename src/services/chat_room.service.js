@@ -1,3 +1,5 @@
+import { getRoomId } from "../utils/chat_helper.js";
+
 export const chatRoom = async (currentUserId, otherUserId) => {
   // Dono users se same chat room ID banayenge
   const roomId = getRoomId(currentUserId, otherUserId);
